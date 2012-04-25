@@ -1,7 +1,8 @@
-var redis = require('redis-daos').build('twitter-stream');
-var cp = require('child_process');
-var chunkize = require('../lib/chunkize_users.js');
-var kids = [];
+var redis = require('redis-daos').build('twitter-stream')
+, cp = require('child_process')
+, chunkize = require('../lib/chunkize.js')
+, KIDS = []
+, RESTART_INTERVAL = 20 * 60 * 1000; //20 minutes
 
 var fork = function(users, child_id){
   var kid = cp.fork(__dirname + '/../daemons/stream.js'
@@ -9,7 +10,7 @@ var fork = function(users, child_id){
   , {encodeing:'utf8'
   , env:process.env});
 
-  kids.push(kid);
+  KIDS.push(kid);
 
   kid.on('exit', function(m){
     console.log(child_id, ':exited');
@@ -21,22 +22,22 @@ var fork = function(users, child_id){
   });
 };
 
-var kill_kids = function(){
-  while(kids.length){
-    kids.shift().kill();
+var kill_KIDS = function(){
+  while(KIDS.length){
+    KIDS.shift().kill();
   }
 };
 
 var init = function(){
-  if (kids.length){
-    kill_kids();
+  if (KIDS.length){
+    kill_KIDS();
   }
   redis.getUserSet(function(e, set){
     chunkize(set).forEach(function(chunk, child_id){
       fork(chunk, child_id);
     });
   });
-  setTimeout(init, 10000);
+  setTimeout(init, RESTART_INTERVAL);
 };
 
 init();
