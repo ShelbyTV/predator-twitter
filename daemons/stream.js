@@ -43,16 +43,17 @@ var init_stream_r = function(users, client){
     STREAMS.push(stream);
 
     //FIXME: this is never fired afaik
-    stream.on('disconnect', function(){
+    stream.on('end', function(){
+      console.log('STREAM DIED', arguments);
     });
 
     //on stream data
     stream.on('data', function(tweet){
 
       //establish control_uri
-      /*if(!stream.control_uri) {
+      if(!stream.control_uri) {
         parse_control_uri(tweet, stream) && add_users(stream, USERS.slice(100, 1000));
-      };*/
+      };
 
       //parse tweet
       var _tweet = parse_tweet(tweet);
@@ -64,9 +65,9 @@ var init_stream_r = function(users, client){
 
   });
 
-  setTimeout(function(){
+  /*setTimeout(function(){
     init_stream_r(users, client);
-  }, 100);
+  }, 100);*/
 };
 
 //get beanstalk client

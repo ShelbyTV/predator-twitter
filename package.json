@@ -7,7 +7,7 @@
     , "beanstalk-node" : "git+ssh://git@github.com:ShelbyTV/beanstalk-node.git"
     , "redis-daos" : "git+ssh://git@github.com:ShelbyTV/redis-daos.git"
     , "factory-node" : "git+ssh://git@github.com:ShelbyTV/factory-node.git"
-    , "ntwitter" : "0.3.0"
+    , "ntwitter" : "git://github.com/mkrecny/ntwitter.git"
   }
   , "main": "./index.js"
 }
