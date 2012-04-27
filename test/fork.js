@@ -8,17 +8,17 @@ var redis = require('redis-daos').build('twitter-stream')
 
 var parseReport = function(child_id, report){
   if (!STATS[child_id]) STATS[child_id] = {};
-  STATS[child_id].jobs = report.jobs ? report.jobs : STATS[child_id].jobs;
-  STATS[child_id].users = report.users ? report.users : STATS[child_id].users;
-  STATS[child_id].streams = report.streams ? report.streams : STATS[child_id].streams;
+  ['jobs','users','streams'].forEach(function(stat){
+    STATS[child_id][stat] = report[stat] ? report[stat] : STATS[child_id][stat];
+  });
 };
 
 var showStats = function(){
   var stats = {jobs:0, users:0, streams:0};
   Object.keys(STATS).forEach(function(k){
-    stats.jobs+=STATS[k].jobs;
-    stats.users+=STATS[k].users;
-    stats.streams+=STATS[k].streams;
+    ['jobs','users','streams'].forEach(function(stat){
+      stats[stat]+=STATS[k][stat];
+    });
   });
   console.log(stats);
   setTimeout(showStats, 4000);
@@ -38,6 +38,7 @@ var fork = function(users, child_id){
   });
 
   kid.on('message', function(m){
+    m.added && console.log(m);
     parseReport(child_id, m);
   });
 };

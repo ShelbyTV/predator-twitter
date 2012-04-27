@@ -64,10 +64,6 @@ var init_stream_r = function(users, client){
     });
 
   });
-
-  /*setTimeout(function(){
-    init_stream_r(users, client);
-  }, 100);*/
 };
 
 //get beanstalk client
