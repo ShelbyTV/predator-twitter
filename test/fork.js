@@ -55,9 +55,11 @@ var init = function(){
     kill_KIDS(); //async?
   }
   redis.getUserSet(function(e, set){
-    chunkize(set).forEach(function(chunk, child_id){
-      fork(chunk, child_id);
-    });
+    if (set) {
+      chunkize(set).forEach(function(chunk, child_id){
+        fork(chunk, child_id);
+      });
+    }
     MANUAL_RESTART = false;
   });
   setTimeout(init, RESTART_INTERVAL);
