@@ -8,7 +8,6 @@
     , "redis-daos" : "git+ssh://git@github.com:ShelbyTV/redis-daos.git"
     , "factory-node" : "git+ssh://git@github.com:ShelbyTV/factory-node.git"
     , "ntwitter" : "git://github.com/mkrecny/ntwitter.git"
-    , "node-memcached" : "git://github.com/3rd-Eden/node-memcached.git"
   }
   , "main": "./index.js"
 }
