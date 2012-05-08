@@ -24,9 +24,9 @@ var put_job = function(job, client){
     STATS.jobs += e ? 0 : 1;
   }, 'link_processing_gt');
 
-  client.put(job, function(e, res){
+  /*client.put(job, function(e, res){
     STATS.jobs += e ? 0 : 1;
-  }, 'uri_test_tube', true);
+  }, 'uri_test_tube', true);*/
 };
 
 var init_add_handler = function(client){
