@@ -22,7 +22,7 @@ var report = function(){
 var put_job = function(job, client){
   client.put(job, function(e, res){
     STATS.jobs += e ? 0 : 1;
-  }, 'link_processing_gt');
+  }, 'link_processing_gt', true);
 
   /*client.put(job, function(e, res){
     STATS.jobs += e ? 0 : 1;
