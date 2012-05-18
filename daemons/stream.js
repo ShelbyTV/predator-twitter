@@ -61,6 +61,8 @@ var init_stream_r = function(users, client){
 
       //parse tweet
       var _tweet = parse_tweet(tweet);
+      
+      if (_tweet && _tweet.provider_user_id=='279185282') console.log(_tweet);
 
       //put job
       _tweet && put_job(_tweet, client);
